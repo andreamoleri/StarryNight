@@ -1,4 +1,4 @@
-Temperature (K),Luminosity(L/Lo),Radius(R/Ro),Absolute magnitude(Mv),Star type,Star color,Spectral Class
+Temperature (K),Luminosity(L/Lo),Radius(R/Ro),Absolute Magnitude(Mv),Star Type,Star Color,Spectral Class
 3068,0.0024,0.17,16.12,0,Red,M
 3042,0.0005,0.1542,16.6,0,Red,M
 2600,0.0003,0.102,18.7,0,Red,M
