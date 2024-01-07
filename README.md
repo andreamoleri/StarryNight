@@ -1,6 +1,6 @@
 # StarryNight
 
-![Starry Night](https://github.com/andreamoleri/StarryNight/assets/70026300/cb94666f-5dbe-48cd-9de8-69bfe70faa26)
+<img src="./Images/Starry Night.jpeg" width="350">
 
 ## Team Members
 - 902011, Moleri Andrea, a.moleri@campus.unimib.it
@@ -11,7 +11,7 @@
 
 The StarryNight project is a Python notebook that leverages the Hertzsprung-Russell Diagram (HR-Diagram) and employs machine learning methodologies to uncover inherent patterns within stellar data. The primary goal of this project is to establish a robust framework for categorizing stars based on their discernible features, ultimately aiding scientists and astronomers in their research endeavors.
 
-![HRDiagram](https://github.com/andreamoleri/StarryNight/assets/70026300/70fae6f7-d735-421b-9ef4-6da607f7862b)
+<img src="./Images/Spectral Class Diagram.png" width="350">
 
 ## Features
 
