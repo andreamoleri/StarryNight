@@ -52,44 +52,6 @@ This project delves into the intricate realm of stellar phenomena with the prima
 
 7. **Conclusions:** This section encapsulates the final reflections and implications drawn from the project. It discusses the significance of the findings, potential avenues for further research, and the broader impact of the developed classification system on the field of astrophysics.
 
-## Getting Started
-
-To run the StarryNight project, follow these steps:
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/StarryNight.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd StarryNight
-   ```
-
-3. Install the required dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the Python notebook:
-
-   ```bash
-   jupyter notebook StarryNight.ipynb
-   ```
-
-## Dependencies
-
-- Python 3.x
-- Jupyter Notebook
-- NumPy
-- Pandas
-- Scikit-learn
-- Matplotlib
-- Other dependencies listed in the `requirements.txt` file.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
