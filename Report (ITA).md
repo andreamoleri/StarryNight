@@ -34,14 +34,28 @@ Le seguenti definizioni si applicano:
 - $(R_o = 6.9551 ∗ 10^8 m)$: Raggio Medio del Sole
 
 ## Formattazione e Analisi dei Dati
-Iniziamo eseguendo il frammento di codice sottostante, necessario per importare tutte le dipendenze necessarie per il progetto.
-Ciò che segue è la formattazione preliminare del dataset, che assicura che tutte le istanze considerate abbiano valori corretti e ben formattati. È anche importante verificare che la colonna target sia di tipo dati categorico, il che porterà a prestazioni migliori, non solo nelle operazioni, ma anche nell'addestramento del nostro modello.
-Dopo aver confermato le dimensioni e le principali caratteristiche del dataframe, la nostra attenzione è ora rivolta a comprendere la distribuzione dei valori all'interno di ciascuna classe target. Il prossimo frammento di codice mira a sottolineare la distribuzione del numero di istanze associate a ciascuna classe target. I valori all'interno delle classi target sembrano distribuirsi uniformemente, presentando un campionamento bilanciato nel dataset. Dopo questa considerazione, descriveremo anche il dataframe per un riferimento più semplice, inclusi valori statistici rilevanti come medie e percentili.
-Iniziamo esplorando visualmente il dataset attraverso un grafico a barre normalizzato, con un focus sul tipo di stella come nostra variabile target. Di conseguenza, rappresenteremo tutte le caratteristiche numeriche in relazione al tipo di stella stesso, fornendo un'idea della loro distribuzione. È essenziale riconoscere che i valori numerici sono normalizzati su una scala tra 0 e 1. Questa normalizzazione assicura la visibilità, considerando le notevoli differenze di ordini di grandezza tra i valori rappresentati.
-Dopo alcune sperimentazioni iterative, viene utilizzato un grafico a dispersione per rappresentare visivamente una coppia di attributi con separabilità lineare. In particolare, la nostra indagine identifica "Temperatura (K)" e "Magnitudine Assoluta (Mv)" come attributi ottimali a questo scopo all'interno del dataframe. Il grafico risultante conferma che non c'è necessità di rimappare lo spazio attributi esistente in uno nuovo, poiché gli attributi selezionati catturano già efficacemente la separazione lineare desiderata.
-Passiamo quindi alla fase di Analisi delle Componenti Principali, iniziando con l'Analisi della Varianza.
+Il processo inizia eseguendo la formattazione preliminare del dataset per assicurarci che tutte le istanze considerate abbiano valori corretti e ben formattati, in quanto si è osservato, soprattutto per i dati relativi al colore, che valori uguali fossero memorizzati in maniera diversa (maiuscole/minuscole e utilizzo di spazi e trattini). Successivamente, avviene la conversione della colonna target sia di tipo categorico, poiché ciò permette l'esecuzione di alcune operazioni e migliora le prestazioni nelle operazioni e nell'addestramento del modello.
 
-### Considerazioni sull'Analisi della Varianza
+Dopodiché vengono verificate le dimensioni e le principali caratteristiche del dataframe e, una volta terminato, ci concentriamo sulla comprensione della distribuzione dei valori all'interno di ciascuna classe target, tramite l'utilizzo di un grafico a torta.
+
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/pie.png?raw=true"></div>
+
+I valori all'interno delle classi target si distribuiscono uniformemente, indicando un campionamento bilanciato nel dataset.
+
+Al termine di questa fase avviene un'esplorazione visiva attraverso un grafico a barre normalizzato, concentrandoci sul tipo di stella come classe target. Tramite il grafico, è possibile rappresentare tutte le caratteristiche numeriche in relazione al tipo di stella, offrendo un'idea della loro distribuzione.
+
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/hist.png?raw=true"></div>
+
+Dopo sperimentazioni iterative, utilizziamo un grafico a dispersione per visualizzare una coppia di attributi con separabilità lineare. In particolare, identifichiamo "Temperatura (K)" e "Magnitudine Assoluta (Mv)" come attributi ottimali a questo scopo nel dataframe. Il grafico conferma che non è necessario rimappare lo spazio attributi esistente in uno nuovo, poiché gli attributi selezionati catturano già efficacemente la separazione lineare desiderata.
+
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/graph1.png?raw=true"></div>
+
+Infine, procediamo quindi alla fase di Analisi delle Componenti Principali, iniziando con l'Analisi della Varianza e ottenendo i seguenti risultati.
+
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/pca.png?raw=true"></div>
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/scatter.png?raw=true"></div>
+
+Al termine di questa fase sono sorte le seguenti considerazioni:
 - Temperature ($K$): un rapporto di varianza di circa 0.6 indica una varianza moderata rispetto alla popolazione di riferimento. Ciò potrebbe suggerire che le temperature stellari nel dataset sono relativamente omogenee, ma ci sono comunque differenze significative.
 - Luminosity ($L/L_o$): un rapporto di varianza di circa 0.2 indica una varianza inferiore rispetto alle temperature, ma è comunque presente. Le luminosità delle stelle nel dataset sembrano essere più omogenee rispetto alle temperature.
 - Raggio ($R/R_o$): un rapporto di varianza di circa 0.1 suggerisce una bassa varianza rispetto alla popolazione di riferimento per il raggio stellare. Ciò potrebbe indicare che il raggio delle stelle nel dataset è relativamente simile tra loro.
@@ -60,7 +74,7 @@ La decisione di adottare un modello di Albero Decisionale è guidata da diverse 
 
 Per la creazione del modello si è deciso di mantenere uno stato casuale fisso (`random_state=42`) per garantire la riproducibilità dei risultati. L'albero decisionale ottenuto al termine della fase di training presenta `11` nodi, di cui `6` foglia.
 
-<div align="center"><img src="./Images/tree.png"></div>
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/tree.png?raw=true"></div>
 
 Per una valutazione preliminare del modello, abbiamo scelto di esaminare la matrice di confusione, fornendo al modello il test di set e confrontando le etichette effettive (`y_test`) con quelle predette (`y_pred`). In tutte le analisi condotte, l'albero decisionale ha costantemente dimostrato un tasso di correttezza del `100%`.
 
@@ -71,7 +85,7 @@ Un aspetto rilevante è la capacità di generalizzazione di una rete neurale ben
 
 Per ottenere il modello inizialmente viene istanziato un oggetto Sequenziale. Il modello è costruito aggiungendo strati densi (totalmente connessi) con configurazioni specifiche. Il primo strato densamente connesso ha 3 unità e utilizza la funzione di attivazione Rectified Linear Unit (ReLU). Questo strato riceve un input di dimensione 4, come specificato dal parametro input_shape. Il secondo strato densamente connesso ha 6 unità e utilizza la funzione di attivazione softmax. Softmax è comunemente impiegato nell'ultimo strato di una rete neurale per problemi di classificazione multiclasse, convertendo l'output in una distribuzione di probabilità su più classi. Successivamente, il modello viene compilato con configurazioni specifiche. La funzione di perdita è impostata su categorical_crossentropy, adatta per problemi di classificazione multiclasse. L'ottimizzatore Adam è scelto per aggiornare i pesi della rete, e la metrica di valutazione è l'accuratezza, misurando la percentuale di previsioni corrette.
 
-<div align="center"><img src="./Images/Neural Network Model.png"></div>
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/Neural%20Network%20Model.png?raw=true"></div>
 
 Durante la fase di addestramento, per scopi estetici, è stato utilizzato il Callback di TensorFlow per visualizzare il progresso dell'addestramento in una singola riga, anziché in un formato esteso, che avrebbe occupato una parte significativa del notebook senza fornire valore aggiuntivo. In questo formato, il numero di epoche utilizzato per addestrare il modello viene riportato, seguito dai valori di accuratezza del modello.
 
@@ -86,8 +100,8 @@ Per individuare il valore ottimale di `k` per il classificatore, abbiamo utilizz
 
 Dopo aver escluso i valori di `k` superiori a `12`, in quanto presentavano silhouette disomogenee, abbiamo selezionato il valore di `k` con la silhouette media più elevata, poiché non vi erano differenze significative tra i grafici, ottenendo `k = 16`.
 
-<div align="center"><img src="./Images/silhouette.png"></div>
-<div align="center"><img src="./Images/graph.png"></div>
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/silhouette.png?raw=true"></div>
+<div align="center"><img src="https://github.com/andreamoleri/StarryNight/blob/main/Images/graph.png?raw=true"></div>
 
 Per l'analisi del valore ottimale di `k` e la successiva classificazione, abbiamo adottato la seguente strategia: trattandosi di un modello non supervisionato, alla fine della fase di addestramento, per ogni centroide, abbiamo identificato il punto più vicino da cui abbiamo estratto il valore di `y` corrispondente. Questo valore è stato poi assegnato a tutti i punti del cluster, e cluster con lo stesso valore di `y` sono stati uniti. Questa scelta è stata motivata dal fatto che il numero di cluster superava il numero di classi target.
 
