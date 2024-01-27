@@ -9,7 +9,7 @@
 Il progetto StarryNight si propone di sviluppare un sistema di classificazione di corpi celesti mediante l'impiego di 3 modelli: gli alberi decisionali, le reti neurali e il clustering. L’obiettivo primario è di dimostrare che le stelle sono divisibili in classi, come già teorizzato dal diagramma di Herzsprung-Russell (Diagramma HR) al quale la nostra ricerca si appoggia. Tale diagramma costituisce la base per classificare le stelle tracciando le loro caratteristiche, fornendo così informazioni sulle loro proprietà.
 
 ## Scelte di Progettazione per la Creazione del Dataset, Ipotesi e Assunzioni
-![](Images/Spectral%20Class%20Diagram.png)
+![](../../Images/Spectral%20Class%20Diagram.png)
 
 Nella creazione del dataset, assumiamo che le stelle mostrino pattern identificabili nelle loro caratteristiche, consentendo una classificazione significativa. Il Diagramma HR sarà utilizzato come linea guida per il sistema di classificazione. Il dataset comprenderà una serie di caratteristiche cruciali per la classificazione:
 
@@ -46,22 +46,22 @@ Il processo inizia eseguendo una fase di formattazione preliminare del dataset p
 
 Dopodiché vengono verificate le dimensioni e le principali caratteristiche del dataframe e, terminata questa fase, ci concentriamo sulla comprensione della distribuzione dei valori all'interno di ciascuna classe target tramite l'utilizzo di un grafico a torta.
 
-![](Images/pie.png)
+![](../../Images/pie.png)
 
 I valori all'interno delle classi target si distribuiscono uniformemente, indicando un campionamento bilanciato nel dataset.
 
 Al termine di questa fase è stata eseguita un ulteriore esplorazione attraverso un grafico a barre su valori normalizzati, concentrandoci sul tipo di stella come classe target. Tramite il grafico, è possibile visualizzare tutte le caratteristiche numeriche degli attributi in relazione al tipo di stella, offrendo un'idea della loro distribuzione. Si denota che certi attributi, in particolare “Temperature”, sono ben distinti in base alle tipologie di stella ai quali appartengono. Questo sarà da tenere in considerazione nelle scelte di lavorazione dei dati future, in quanto permetterà una separazione lineare più agevole in fase di classificazione
 
-![](Images/hist.png)
+![](../../Images/hist.png)
 
 Dopo varie sperimentazioni iterative, utilizziamo uno scatter plot per visualizzare la coppia di attributi con la migliore separabilità lineare possibile. In particolare, identifichiamo "Temperatura (K)" e "Magnitudine Assoluta (Mv)" come attributi ottimali a questo scopo nel dataframe. Il grafico conferma che non è necessario rimappare lo spazio attributi esistente in uno nuovo, poiché gli attributi selezionati catturano già efficacemente la separazione lineare desiderata.
 
-![](Images/graph1.png)
+![](../../Images/graph1.png)
 
 Infine, procediamo alla fase di Analisi delle Componenti Principali, iniziando con l'Analisi della Varianza e ottenendo i seguenti risultati.
 
-![](Images/pca.png)
-![](Images/scatter.png)
+![](../../Images/pca.png)
+![](../../Images/scatter.png)
 
 Al termine di questa fase sono sorte le seguenti considerazioni:
 
@@ -84,7 +84,7 @@ La decisione di adottare un modello di Albero Decisionale è guidata da diverse 
 
 Per la creazione del modello si è deciso di mantenere un random state fisso (`random_state=42`) per garantire la riproducibilità dei risultati. L'albero decisionale ottenuto al termine della fase di training presenta `11` nodi, di cui `6` nodi foglia.
 
-![](Images/tree.png)
+![](../../Images/tree.png)
 
 Per una valutazione preliminare del modello, abbiamo scelto di esaminare la matrice di confusione, fornendo al modello il test set e confrontando le etichette effettive (`y_test`) con quelle predette (`y_pred`). In tutte le analisi condotte, l'albero decisionale ha costantemente dimostrato un tasso di correttezza del `100%`.
 
@@ -95,7 +95,7 @@ Un aspetto rilevante è la capacità di generalizzazione di una rete neurale ben
 
 Per ottenere il modello, inizialmente viene istanziato un oggetto `Sequential`. Il modello è costruito aggiungendo strati densi (totalmente connessi) con configurazioni specifiche. Il primo strato densamente connesso ha 3 unità e utilizza la funzione di attivazione Rectified Linear Unit (ReLU). Questo strato riceve un input di dimensione 4, come specificato dal parametro `input_shape`. Il secondo strato densamente connesso ha 6 unità e utilizza la funzione di attivazione softmax. Softmax è comunemente impiegato nell'ultimo strato di una rete neurale per problemi di classificazione multiclasse, convertendo l'output in una distribuzione di probabilità su più classi. Successivamente, il modello viene compilato. La funzione di perdita è impostata su `categorical_crossentropy`, adatta per problemi di classificazione multiclasse. Per aggiornare i pesi della rete, è stato scelto l'ottimizzatore Adam, e la metrica di valutazione è l'accuratezza, che misura la percentuale di previsioni corrette.
 
-![](Images/Neural%20Network%20Model.png)
+![](../../Images/Neural%20Network%20Model.png)
 
 Durante la fase di addestramento, per scopi puramente estetici, è stato utilizzato il Callback di TensorFlow ai fini di visualizzare il progresso dell'addestramento in una singola riga, anziché in un formato esteso, che avrebbe occupato una parte significativa del notebook senza fornire valore aggiuntivo. In questo formato, il numero di epoche utilizzato per addestrare il modello viene riportato, seguito dai valori di accuratezza del modello.
 
@@ -110,8 +110,8 @@ Per individuare il valore ottimale di `k` per il classificatore, abbiamo utilizz
 
 Dopo aver escluso i valori di `k` superiori a `12`, in quanto questi presentavano silhouette disomogenee, abbiamo selezionato il valore di `k` con la silhouette media più elevata, poiché non vi erano differenze significative tra i grafici, ottenendo `k = 16`.
 
-![](Images/silhouette.png)
-![](Images/graph.png)
+![](../../Images/silhouette.png)
+![](../../Images/graph.png)
 
 Per l'analisi del valore ottimale di `k` e la successiva classificazione, abbiamo adottato la seguente strategia: trattandosi di un modello non supervisionato, alla fine della fase di addestramento, per ogni centroide, abbiamo identificato il punto più vicino da cui abbiamo estratto il valore di `y` corrispondente. Questo valore è stato poi assegnato a tutti i punti del cluster, e i cluster con lo stesso valore di `y` sono stati uniti. Questa scelta è stata motivata dal fatto che il numero di cluster era superiore al numero di classi target.
 
