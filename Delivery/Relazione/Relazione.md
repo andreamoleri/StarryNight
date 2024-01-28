@@ -38,8 +38,8 @@ Il target per la classificazione sarà la classe "Star Type".
 
 Si applicano le seguenti definizioni:
 
-- $(L_o = 3.828 * 10^{26} Watts)$: Luminosità Media del Sole
-- $(R_o = 6.9551 * 10^8 m)$: Raggio Medio del Sole
+- $L_o = 3.828 * 10^{26} Watts$: Luminosità Media del Sole
+- $R_o = 6.9551 * 10^8 m$: Raggio Medio del Sole
 
 ## Formattazione e Analisi dei Dati
 Il processo inizia eseguendo una fase di formattazione preliminare del dataset per assicurarsi che tutte le istanze considerate abbiano valori corretti e ben formattati, in quanto si è osservato, soprattutto per i dati relativi al colore, che valori uguali fossero memorizzati in maniera diversa (maiuscole/minuscole e utilizzo di spazi e trattini). Successivamente, avviene la conversione della colonna target in tipo categorico, in quanto questo permette l'esecuzione di alcune operazioni e migliora le prestazioni nelle operazioni e nell'addestramento del modello.
@@ -111,6 +111,7 @@ Per individuare il valore ottimale di `k` per il classificatore, abbiamo utilizz
 Dopo aver escluso i valori di `k` superiori a `12`, in quanto questi presentavano silhouette disomogenee, abbiamo selezionato il valore di `k` con la silhouette media più elevata, poiché non vi erano differenze significative tra i grafici, ottenendo `k = 16`.
 
 ![](../../Images/silhouette.png)
+
 ![](../../Images/graph.png)
 
 Per l'analisi del valore ottimale di `k` e la successiva classificazione, abbiamo adottato la seguente strategia: trattandosi di un modello non supervisionato, alla fine della fase di addestramento, per ogni centroide, abbiamo identificato il punto più vicino da cui abbiamo estratto il valore di `y` corrispondente. Questo valore è stato poi assegnato a tutti i punti del cluster, e i cluster con lo stesso valore di `y` sono stati uniti. Questa scelta è stata motivata dal fatto che il numero di cluster era superiore al numero di classi target.
